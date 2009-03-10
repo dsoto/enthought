@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# simple interactive plot example using 
+# simple interactive plot example using
 # ComponentEditor and ArrayPlotData
 
 # TODO : find how to turn off autoscale axis
@@ -22,7 +22,7 @@ class sinDataView(HasTraits):
 	printPNG = Button
 	printPDF = Button
 	plotAttribute = Instance(Plot)
-	
+
 	traits_view = View(
 	              Item('plotAttribute',
 	                   editor=ComponentEditor(),
@@ -35,7 +35,7 @@ class sinDataView(HasTraits):
 	              width=500,height=500)
 
 	def __init__(self):
-		
+
 		# data ranges
 		self.x = arange(-10,10,0.01)
 		self.y = self.freq*sin(self.x)
@@ -52,7 +52,7 @@ class sinDataView(HasTraits):
 		self.plotAttribute.tools.append(DragZoom(self.plotAttribute,
 		                                         drag_button='right'))
 
-	def plotPNG(self):		
+	def plotPNG(self):
 		# now plot object to png file
 		size = (500,500)
 		self.plotAttribute.outer_bounds = list(size)
@@ -66,11 +66,11 @@ class sinDataView(HasTraits):
 		self.plotAttribute.bounds = list(size)
 		self.plotAttribute.do_layout(force=True)
 		# negative dest_box values are from upper right corner
-		gc = PdfPlotGraphicsContext(filename = 'testPPGC.pdf', 
+		gc = PdfPlotGraphicsContext(filename = 'testPPGC.pdf',
 		                            dest_box = (0.5, 0.5, -0.5, -0.5))
 		gc.render_component(self.plotAttribute)
 		gc.save()
-		
+
 	def _freq_changed(self):
 		self.y = self.freq*sin(self.x)
 		self.y2 = sin(self.freq*self.x)
@@ -80,7 +80,7 @@ class sinDataView(HasTraits):
 
 	def _printPNG_fired(self):
 		self.plotPNG()
-		
+
 	def _printPDF_fired(self):
 		self.plotPDF()
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# simple interactive plot example using 
+# simple interactive plot example using
 # ChacoPlotItem as the plot object
 
 
@@ -14,7 +14,7 @@ class Data(HasTraits):
 	x = Array
 	y = Array
 	freq = Range(low=1.0,high=10.0,value=1.0)
-	
+
 	traits_view = View(
 	              ChacoPlotItem("x", "y",
 	                            type='line',
@@ -27,7 +27,7 @@ class Data(HasTraits):
 	              buttons=["quit"],
 	              title='Window Title',
 	              width=800,height=800)
-	              
+
 	def _freq_changed(self):
 		self.x = arange(-10,10,.01)
 		self.y = self.freq*sin(self.freq*self.x)
