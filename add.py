@@ -13,7 +13,7 @@ class mathBox(HasTraits):
 		super(mathBox,self).__init__()
 		self.a = x
 		self.b = y
-		self.c = x + y
+		self.add()
 	
 	def add(self):
 		self.c = self.a + self.b
