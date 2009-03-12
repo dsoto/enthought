@@ -1,41 +1,37 @@
 #!/usr/bin/env python
 
-from enthought.traits.api import (Int, HasTraits, Button, on_trait_change)
+from enthought.traits.api import (Int, HasTraits, Instance, Button,
+                                  on_trait_change)
 from enthought.traits.ui.api import (View, Item, Handler)
 from enthought.traits.ui.menu import (OKButton, CancelButton, Action)
 
 class mathBoxHandler(Handler):
+	mathbox = Instance('mathBox')
 
-	def object_a_changed(self,info):
-		info.object.c = info.object.a + info.object.b
+	def init(self, info):
+		super(mathBoxHandler, self).init(info)
+		self.mathbox = info.object
 
-	def object_b_changed(self,info):
-		info.object.c = info.object.a + info.object.b
-
-# 	@on_trait_change('a,b')
-#   doesn't work for me
-# 	def add(self,info):
-# 		info.object.c = info.object.a + info.object.b
-
-# 	@on_trait_change('info.object.a,info.object.b')
-#   doesn't work for me
-# 	def add(self,info):
-# 		info.object.c = info.object.a + info.object.b
-
+	@on_trait_change('mathbox.a,mathbox.b')
+	def callAdd(self,old,new):
+		self.mathbox.add()
 
 class mathBox(HasTraits):
-	a      = Int
-	b      = Int
-	c      = Int
+	a = Int
+	b = Int
+	c = Int
 
 	def __init__(self,x,y):
 		super(mathBox,self).__init__()
 		self.a = x
 		self.b = y
-		self.c = x + y
+		self.add()
+		
+	def add(self):
+		self.c = self.a + self.b
 	
 	view = View('a','b','c', 
-	            title = 'This Title',
+	            title = 'Adder',
 	            handler = mathBoxHandler(),
 	            buttons = [OKButton, CancelButton])
 
